@@ -22,11 +22,11 @@
                     <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
                     <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
+                <button class="hamburger" aria-label="Menu">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+</button>
             </nav>
         </div>
     </header>
@@ -37,7 +37,7 @@
                 <h1>Quality Auto Repairs at Competitive Prices</h1>
                 <p>Your vehicle deserves the best care. Trust our experts with over 20 years of experience in the automotive industry.</p>
                 <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-primary">Book an Appointment</a>
+                    <a href="#contact" class="btn btn-secondary">Book an Appointment</a>
                     <a href="tel:+18005551234" class="btn btn-secondary">
                         <i class="fas fa-phone"></i> Call Us Now
                     </a>
@@ -362,6 +362,81 @@
         </a>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+     document.addEventListener('DOMContentLoaded', () => {
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.querySelector('.nav-menu');
+  
+  hamburger.addEventListener('click', function() {
+    this.classList.toggle('active');
+    navMenu.classList.toggle('active');
+    
+    // Animazione semplificata per le barre
+    if (this.classList.contains('active')) {
+      this.querySelector('.bar:nth-child(1)').style.transform = 'translateY(11px) rotate(45deg)';
+      this.querySelector('.bar:nth-child(2)').style.opacity = '0';
+      this.querySelector('.bar:nth-child(3)').style.transform = 'translateY(-11px) rotate(-45deg)';
+    } else {
+      this.querySelector('.bar:nth-child(1)').style.transform = '';
+      this.querySelector('.bar:nth-child(2)').style.opacity = '';
+      this.querySelector('.bar:nth-child(3)').style.transform = '';
+    }
+  });
+  
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      // Ripristina l'icona hamburger
+      hamburger.querySelector('.bar:nth-child(1)').style.transform = '';
+      hamburger.querySelector('.bar:nth-child(2)').style.opacity = '';
+      hamburger.querySelector('.bar:nth-child(3)').style.transform = '';
+    });
+  });
+});
+
+// Slider testimonial
+document.addEventListener('DOMContentLoaded', function() {
+    const testimonials = document.querySelectorAll('.testimonial-card');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    let currentIndex = 0;
+
+    function showTestimonial(index) {
+        testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        testimonials[index].classList.add('active');
+        dots[index].classList.add('active');
+    }
+
+    function nextTestimonial() {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        showTestimonial(currentIndex);
+    }
+
+    function prevTestimonial() {
+        currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+        showTestimonial(currentIndex);
+    }
+
+    // Aggiungi event listeners
+    nextBtn.addEventListener('click', nextTestimonial);
+    prevBtn.addEventListener('click', prevTestimonial);
+
+    // Aggiungi click sui dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentIndex = index;
+            showTestimonial(currentIndex);
+        });
+    });
+
+    // Auto-rotate (opzionale)
+    // setInterval(nextTestimonial, 5000);
+});
+    </script>
 </body>
 </html>
